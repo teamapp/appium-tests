@@ -1,0 +1,6 @@
+[caps]
+app = "/Users/chamithawijesekera/teamapp/team-app-ios/build/Debug-iphonesimulator/Team App Debug.app"
+platformName = "iOS"
+deviceName = "iPhone 8"
+platformVersion = "11.4"
+automationName = "XCUITest"
