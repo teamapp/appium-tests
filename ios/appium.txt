@@ -4,3 +4,4 @@ platformName = "iOS"
 deviceName = "iPhone 8"
 platformVersion = "11.4"
 automationName = "XCUITest"
+waitForQuiescence = false

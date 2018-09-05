@@ -1,33 +1,55 @@
+require_relative '../ios/pages/welcome'
+require_relative '../ios/pages/enter_email'
+require_relative '../ios/pages/enter_password'
+require_relative '../ios/pages/new_user'
+require_relative '../ios/pages/enter_code'
+require_relative '../ios/pages/consent'
+
 require_relative 'spec_helper'
 
+require 'securerandom'
+
 describe 'login' do
-    before(:each) do
-        find_element(:accessibility_id, "LOG IN").click
-        $wait.until { find_ele_by_attr("XCUIElementTypeNavigationBar", "name", "Log In").displayed? }
+    before(:each) do        
+        $wait.until { $driver.find_ele_by_attr("XCUIElementTypeNavigationBar", "name", "Team App").displayed? }
+        $driver.find_element(:accessibility_id, "LOG IN").click
     end
 
     after(:each) do
-    end    
+    end   
+    
+    it 'should login user with email and password' do
+        welcome = Pages::Welcome.new()
 
-    it 'should show invalid email or password' do
-        find_element(:accessibility_id, "user_auth[email]").type("fubar@teamapp.com")
-        find_element(:accessibility_id, "user_auth[password]").type("Fubar123")
-        find_element(:accessibility_id, "Submit").click
+        enter_email = welcome.goto_enter_email
+        enter_email.enter_email('admin@simple.com')
 
-        $wait.until { find_ele_by_attr("XCUIElementTypeAlert", "name", "Please Review").displayed? }
+        enter_password = enter_email.goto_enter_password
+        enter_password.enter_password('password')
 
-        expect(find_element(:xpath, "//XCUIElementTypeAlert//XCUIElementTypeStaticText[2]").text).to eq "Email or password is not correct"
-
-        alert_dismiss
-        find_element(:accessibility_id, "Cancel").click
+        enter_password.goto_clubs
     end
 
-    it 'should succeed' do
-        find_element(:accessibility_id, "user_auth[email]").type("chamitha@teamapp.com")
-        find_element(:accessibility_id, "user_auth[password]").type("Password1")
-        find_element(:accessibility_id, "Submit").click
+    it 'should login user with email and no password' do
+        welcome = Pages::Welcome.new()
+
+        enter_email = welcome.goto_enter_email
+        enter_email.enter_email('chamitha@teamapp.com')
+
+        enter_code = enter_email.goto_enter_code
+
+        # TODO: 
+    end
+
+    it 'should create user with email' do
+        welcome = Pages::Welcome.new()
+
+        enter_email = welcome.goto_enter_email
+        enter_email.enter_email(SecureRandom.hex(10) + '@simple.com')  
         
-        $wait.until { find_ele_by_attr("XCUIElementTypeNavigationBar", "name", "Team App").displayed? }        
-    end
+        new_user = enter_email.goto_new_user
+        new_user.goto_enter_code
 
+        # TODO:
+    end
 end

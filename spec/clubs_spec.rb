@@ -1,8 +1,9 @@
 require_relative '../ios/pages/clubs'
+require_relative '../ios/pages/new_club'
 require_relative 'spec_helper'
 
 describe 'clubs' do
-    before(:all) do
+    before(:each) do
         find_element(:accessibility_id, "LOG IN").click
         $wait.until { find_ele_by_attr("XCUIElementTypeNavigationBar", "name", "Log In").displayed? }
 
@@ -18,6 +19,7 @@ describe 'clubs' do
 
     it 'should create new club' do
         clubs.click_create
+        new_club.click_cancel
     end
 
 end
