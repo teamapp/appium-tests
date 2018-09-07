@@ -5,7 +5,6 @@ module Pages
 
       def enter_email(email)
         find_element(:accessibility_id, "user_session[email]").type(email)
-        hide_keyboard
       end    
       
       def goto_enter_password
