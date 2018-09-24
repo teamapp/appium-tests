@@ -7,6 +7,11 @@ module Pages
       find_element(:accessibility_id, "Yes").click
       $wait.until { find_ele_by_attr("XCUIElementTypeNavigationBar", "name", "Log In").displayed? }        
       Pages::EnterCode.new
-    end        
+    end  
+    
+    def goto_welcome
+      find_element(:accessibility_id, "No").click
+      $wait.until { find_element(:accessibility_id, "Continue with Email").displayed? }
+    end  
   end
 end
