@@ -17,6 +17,10 @@ module Pages
         find_element(:accessibility_id, "user[year_of_birth]").click
         picker_wheel = find_element(:class, "XCUIElementTypePickerWheel")
         select_picker_wheel(element: picker_wheel, order: "next", offset: 0.5)
+        select_picker_wheel(element: picker_wheel, order: "next", offset: 0.5)
+        select_picker_wheel(element: picker_wheel, order: "next", offset: 0.5)
+        select_picker_wheel(element: picker_wheel, order: "next", offset: 0.5)
+        select_picker_wheel(element: picker_wheel, order: "next", offset: 0.5)
       end   
 
       def goto_consent
