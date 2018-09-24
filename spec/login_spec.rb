@@ -21,7 +21,7 @@ describe 'login' do
         welcome = Pages::Welcome.new()
 
         enter_email = welcome.goto_enter_email
-        enter_email.enter_email('admin@simple.com')
+        enter_email.enter_email('automation-test-user-1@teamapp.com')
 
         enter_password = enter_email.goto_enter_password
         enter_password.enter_password('password')
@@ -29,11 +29,29 @@ describe 'login' do
         enter_password.goto_clubs
     end
 
+    it 'should login user with manual membership' do
+        welcome = Pages::Welcome.new()
+
+        enter_email = welcome.goto_enter_email
+        enter_email.enter_email('automation-test-user-2@teamapp.com')
+
+        enter_code = enter_email.goto_enter_code
+        enter_code.enter_code('000000')
+        user_profile = enter_code.goto_user_profile
+
+        user_profile.select_year_of_birth
+        user_profile.select_country
+        consent = user_profile.goto_consent
+
+        consent.accept_terms
+        consent.goto_clubs
+    end
+
     it 'should login user with email and no password' do
         welcome = Pages::Welcome.new()
 
         enter_email = welcome.goto_enter_email
-        enter_email.enter_email('chamitha@teamapp.com')
+        enter_email.enter_email('automation-test-user-3@teamapp.com')
 
         enter_code = enter_email.goto_enter_code
 
@@ -45,7 +63,7 @@ describe 'login' do
         welcome = Pages::Welcome.new()
 
         enter_email = welcome.goto_enter_email
-        enter_email.enter_email(SecureRandom.hex(10) + '@simple.com')  
+        enter_email.enter_email(SecureRandom.hex(10) + '@teamapp.com')  
         
         new_user = enter_email.goto_new_user
         enter_code = new_user.goto_enter_code
@@ -53,12 +71,23 @@ describe 'login' do
         enter_code.enter_code('000000')
         user_profile = enter_code.goto_user_profile
 
-        user_profile.select_country
+        user_profile.enter_name('Chuck Norris')
         user_profile.select_year_of_birth
+        user_profile.select_country
         consent = user_profile.goto_consent
 
         consent.accept_terms
         consent.goto_clubs
+    end
+
+    it 'should not create user' do
+        welcome = Pages::Welcome.new()
+
+        enter_email = welcome.goto_enter_email
+        enter_email.enter_email(SecureRandom.hex(10) + '@teamapp.com')  
+        
+        new_user = enter_email.goto_new_user
+        new_user.goto_welcome
     end
 end
 
@@ -73,7 +102,7 @@ describe 'forgot password' do
         welcome = Pages::Welcome.new()
 
         enter_email = welcome.goto_enter_email
-        enter_email.enter_email('admin@simple.com')
+        enter_email.enter_email('automation-test-user-1@teamapp.com')
 
         enter_password = enter_email.goto_enter_password
         enter_code = enter_password.goto_enter_code
